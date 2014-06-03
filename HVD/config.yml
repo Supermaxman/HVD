@@ -10,7 +10,10 @@ settings:
     lobbylocationz: '0'
     starttime: '40'
     timelimit: '600'
-    gamelocationx: '100'
+    gamelocationx: '0'
     gamelocationy: '100'
-    gamelocationz: '100'
+    gamelocationz: '0'
+    applelocationx: '0'
+    applelocationy: '100'
+    applelocationz: '0'
     
