@@ -46,7 +46,12 @@ public class HVD extends JavaPlugin {
 			int x2 = Integer.parseInt(HVD.conf.getString("settings.arena.gamelocationx"));
 			int y2 = Integer.parseInt(HVD.conf.getString("settings.arena.gamelocationy"));
 			int z2 = Integer.parseInt(HVD.conf.getString("settings.arena.gamelocationz"));
-			game = new HVDGame(min,max, x, y, z, start, limit, x2, y2, z2);
+			
+			int x3 = Integer.parseInt(HVD.conf.getString("settings.arena.applelocationx"));
+			int y3 = Integer.parseInt(HVD.conf.getString("settings.arena.applelocationy"));
+			int z3 = Integer.parseInt(HVD.conf.getString("settings.arena.applelocationz"));
+			
+			game = new HVDGame(min,max, x, y, z, start, limit, x2, y2, z2, x3, y3, z3);
 			
 			
 		} catch (Exception e) {

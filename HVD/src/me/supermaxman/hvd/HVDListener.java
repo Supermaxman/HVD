@@ -9,10 +9,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 	
 public class HVDListener implements Listener {
@@ -52,6 +59,12 @@ public class HVDListener implements Listener {
 			e.setCancelled(true);
 		}
 	}
+	@EventHandler
+	public void onPlayerMove(PlayerMoveEvent e) {
+		if(e.getPlayer().getName().equals(HVD.game.getHunter()) && HVD.game.isEnded()) {
+			e.setCancelled(true);
+		}
+	}
 	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
@@ -76,6 +89,29 @@ public class HVDListener implements Listener {
 				}
 			}
 		}
+		if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+			Player p = e.getPlayer();
+			if(p.getItemInHand()!=null) {
+				ItemStack i = p.getItemInHand();
+				if(i.getItemMeta().hasDisplayName()) {
+					if(i.getItemMeta().getDisplayName().equals(ChatColor.YELLOW + "" + ChatColor.BOLD + "Sprint")) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 3, true));
+					}
+				}
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onPlayerPickupItem(PlayerPickupItemEvent e) {
+		Player p = e.getPlayer();
+		ItemStack i = e.getItem().getItemStack();
+		if(i.getItemMeta().hasDisplayName()) {
+			if(i.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "" + ChatColor.BOLD + "Apple")) {
+				p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 400, 3, false));
+			}
+		}
+	
 	}
 	
 	@EventHandler
@@ -83,6 +119,31 @@ public class HVDListener implements Listener {
 		if (e.getEntity() instanceof Player) {
 			e.setCancelled(true);
 			e.setFoodLevel(20);
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	@EventHandler
+	public void onPlayerDamage(EntityDamageEvent e) {
+		if(e instanceof EntityDamageByEntityEvent) {
+			if(((EntityDamageByEntityEvent) e).getDamager() instanceof Player && e.getEntity() instanceof Player) {
+				Player p = (Player) ((EntityDamageByEntityEvent) e).getDamager();
+				//Player d = (Player) e.getEntity();
+				if(p.getItemInHand()!=null) {
+					ItemStack i = p.getItemInHand();
+					if(i.getItemMeta().hasDisplayName()) {
+						if(i.getItemMeta().getDisplayName().equals(ChatColor.RED + "" + ChatColor.BOLD + "Horn")){
+							e.setDamage(4);
+						}
+					}
+				}
+			}
+		}
+		if (e instanceof Player) {
+			Player p = ((Player) e).getPlayer();
+			if(p.getName().equals(HVD.game.getHunter()) && HVD.game.isEnded()) {
+				e.setCancelled(true);
+			}
 		}
 	}
 	

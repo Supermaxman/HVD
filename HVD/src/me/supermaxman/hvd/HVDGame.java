@@ -17,11 +17,16 @@ public class HVDGame{
     private int gameLocationY;
     private int gameLocationZ;
     
+    private int appleLocationX;
+    private int appleLocationY;
+    private int appleLocationZ;
+    
     private boolean ended;
     private HVDGameThread thread;
+    private HVDHandleThread threadHandle;
     private String hunter;
     
-    public HVDGame(int min, int max, int x, int y, int z, int start, int limit, int x2, int y2, int z2) {
+    public HVDGame(int min, int max, int x, int y, int z, int start, int limit, int x2, int y2, int z2, int x3, int y3, int z3) {
         minPlayers = min;
         maxPlayers = max;
         lobyLocationX = x;
@@ -33,12 +38,17 @@ public class HVDGame{
         setGameLocationY(y2);
         setGameLocationZ(z2);
         
+        setAppleLocationX(x3);
+        setAppleLocationY(y3);
+        setAppleLocationZ(z3);
+        
         thread = new HVDGameThread(HVD.plugin, this);
+        threadHandle = new HVDHandleThread(HVD.plugin, this);
         setEnded(false);
         thread.start();
     }
-
-
+    
+    
 	public String chooseHunter() {
 		Random r = new Random();
 		int i = r.nextInt(HVD.players.size());
@@ -173,6 +183,46 @@ public class HVDGame{
 
 	public void setGameLocationZ(int gameLocationZ) {
 		this.gameLocationZ = gameLocationZ;
+	}
+
+
+	public int getAppleLocationX() {
+		return appleLocationX;
+	}
+
+
+	public void setAppleLocationX(int appleLocationX) {
+		this.appleLocationX = appleLocationX;
+	}
+
+
+	public int getAppleLocationY() {
+		return appleLocationY;
+	}
+
+
+	public void setAppleLocationY(int appleLocationY) {
+		this.appleLocationY = appleLocationY;
+	}
+
+
+	public int getAppleLocationZ() {
+		return appleLocationZ;
+	}
+
+
+	public void setAppleLocationZ(int appleLocationZ) {
+		this.appleLocationZ = appleLocationZ;
+	}
+
+
+	public HVDHandleThread getThreadHandle() {
+		return threadHandle;
+	}
+
+
+	public void setThreadHandle(HVDHandleThread threadHandle) {
+		this.threadHandle = threadHandle;
 	}
     
 

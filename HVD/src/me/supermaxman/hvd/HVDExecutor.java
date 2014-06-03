@@ -36,6 +36,18 @@ public class HVDExecutor extends BaseExecutor {
         			HVD.game.setGameLocationZ(z);
         			HVD.plugin.saveConfig();
                 	player.sendMessage(ChatColor.AQUA+"[HVD]: Game now set at current location.");
+        		}else if(s.equalsIgnoreCase("setapple")) {
+        			int x = player.getLocation().getBlockX();
+        			int y = player.getLocation().getBlockY();
+        			int z = player.getLocation().getBlockZ();
+        			HVD.conf.set("settings.arena.applelocationx", x);
+        			HVD.conf.set("settings.arena.applelocationy", y);
+        			HVD.conf.set("settings.arena.applelocationz", z);
+        			HVD.game.setAppleLocationX(x);
+        			HVD.game.setAppleLocationY(y);
+        			HVD.game.setAppleLocationZ(z);
+        			HVD.plugin.saveConfig();
+                	player.sendMessage(ChatColor.AQUA+"[HVD]: Apple drop now set at current location.");
         		}else if(s.equalsIgnoreCase("starttime")&&(args.length>=2)) {
         			try {
             			int t = Integer.parseInt(args[1]);
@@ -66,10 +78,10 @@ public class HVDExecutor extends BaseExecutor {
                     	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, please only set numbers for limits.");
         			}
         		}else {
-                	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, use /hvd setlobby,setgame,endgame,starttime [time],minplayers [limit],maxplayers [limit].");
+                	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, use /hvd setlobby,setgame,setapple,endgame,starttime [time],minplayers [limit],maxplayers [limit].");
         		}
         	}else {
-            	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, use /hvd setlobby,setgame,endgame,starttime [time],minplayers [limit],maxplayers [limit].");
+            	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, use /hvd setlobby,setgame,setapple,endgame,starttime [time],minplayers [limit],maxplayers [limit].");
         	}
         }else {
         	player.sendMessage(ChatColor.RED+"[HVD]: You do not have permission to use this command.");

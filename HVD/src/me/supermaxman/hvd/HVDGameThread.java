@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -40,13 +41,14 @@ public HVDGameThread(HVD pl, HVDGame g){
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: Game beginning in " +ChatColor.GOLD+start+ChatColor.AQUA+" seconds!");
      	this.wait(start*1000);
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: "+ChatColor.GOLD+"Game Start"+ChatColor.AQUA+"!");
-        game.setEnded(false);
         game.setHunter(game.chooseHunter());
         startGame();
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.RED+game.getHunter()+ChatColor.AQUA+" is the Hunter! You have 10 seconds to run and hide before he is given his gear!");
         this.wait(10*1000);
+        game.setEnded(false);
         equipHunter();
         equipDeer();
+        startDrops();
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.RED+game.getHunter()+ChatColor.AQUA+" is hunting!");
         //start
         
@@ -229,8 +231,14 @@ public HVDGameThread(HVD pl, HVDGame g){
         endGame();
 	}
 	synchronized void endGame() {
+		game.setEnded(true);
+        stopDrops();
+		game.setHunter("");
         for(Player p : plugin.getServer().getOnlinePlayers()) {
         	p.getInventory().clear();
+            for (PotionEffect effect : p.getActivePotionEffects()) {
+                p.removePotionEffect(effect.getType());
+            }
         	p.teleport(new Location(p.getWorld(), game.getLobyLocationX(), game.getLobyLocationY(), game.getLobyLocationZ()));
         	HVD.players = new ArrayList<String>();
         }
@@ -268,8 +276,8 @@ public HVDGameThread(HVD pl, HVDGame g){
 		i = new ItemStack(Material.DIAMOND_SWORD);
 		i.addEnchantment(Enchantment.DAMAGE_ALL, 1);
 		p.setItemInHand(i);
-		p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, game.getTimeLimit(), 2, true));
-		p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, game.getTimeLimit(), 1, true));
+		p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, game.getTimeLimit()*20, 2, true));
+		p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, game.getTimeLimit()*20, 1, true));
 		
 	}
 	synchronized void equipDeer() {
@@ -285,9 +293,33 @@ public HVDGameThread(HVD pl, HVDGame g){
 				p.getInventory().setBoots(i);
 				i = new ItemStack(Material.WOOD_AXE);
 				p.setItemInHand(i);
+				
+				i = new ItemStack(Material.SUGAR);
+				ItemMeta m = i.getItemMeta();
+				m.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "Sprint");
+				ArrayList<String> l = new ArrayList<String>();
+				l.add(ChatColor.AQUA + "Right click to sprint");
+				l.add(ChatColor.AQUA +  "every 15 seconds");
+				m.setLore(l);
+				i.setItemMeta(m);
+				p.getInventory().addItem(i);
+				
+				i = new ItemStack(Material.BLAZE_ROD);
+				m = i.getItemMeta();
+				m.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Horn");
+				l = new ArrayList<String>();
+				l.add(ChatColor.AQUA + "Hits for 1 heart!");
+				m.setLore(l);
+				i.setItemMeta(m);
+				p.getInventory().addItem(i);
 			}
 		}
-		
-		
 	}
+	synchronized void startDrops() {
+		game.getThreadHandle().start();
+	}
+	synchronized void stopDrops() {
+		game.getThreadHandle().go = false;
+	}
+	
 }
