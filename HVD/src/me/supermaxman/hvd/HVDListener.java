@@ -120,6 +120,7 @@ public class HVDListener implements Listener {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerPickupItem(PlayerPickupItemEvent e) {
 		Player p = e.getPlayer();
