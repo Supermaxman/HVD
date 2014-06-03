@@ -128,7 +128,7 @@ public class HVDListener implements Listener {
 			if(i.getItemMeta().hasDisplayName()) {
 				if(i.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "" + ChatColor.BOLD + "Apple")) {
 					if(!p.getName().equals(HVD.game.getHunter())) {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 400, 3, false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 3, false));
 						e.setCancelled(true);
 						HVD.game.getThreadHandle().it.remove();
 					}else {
@@ -168,7 +168,7 @@ public class HVDListener implements Listener {
 					if(i.hasItemMeta()) {
 						if(i.getItemMeta().hasDisplayName()) {
 							if(i.getItemMeta().getDisplayName().equals(ChatColor.RED + "" + ChatColor.BOLD + "Horn")){
-								e.setDamage(16);
+								e.setDamage(20);
 							}
 						}
 					}

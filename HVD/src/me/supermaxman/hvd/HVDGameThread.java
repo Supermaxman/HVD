@@ -64,171 +64,61 @@ public HVDGameThread(HVD pl, HVDGame g){
         int timer = game.getTimeLimit();
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.GOLD+timer+ChatColor.AQUA+" seconds remain in this round!");
      	timer = timer/2;
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        }
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        }
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
+     	int b = 16;
+     	for(int a = 1; a <= b; a++) {
+         	this.wait(timer*1000/b);
+        	if(end)this.interrupt();
+            if(game.isEnded()) {
+            	if(HVD.players.contains(game.getHunter())) {
+            		winGame();
+            	}else {
+            		loseGame();
+            	}
+            }
+     	}
+     	
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.GOLD+timer+ChatColor.AQUA+" seconds remain!");
      	timer = timer/2;
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
+     	for(int a = 1; a <= b; a++) {
+         	this.wait(timer*1000/b);
+        	if(end)this.interrupt();
+            if(game.isEnded()) {
+            	if(HVD.players.contains(game.getHunter())) {
+            		winGame();
+            	}else {
+            		loseGame();
+            	}
+            }
+     	}
+     	
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.GOLD+timer+ChatColor.AQUA+" seconds remain!");
      	timer = timer/2;
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
+     	for(int a = 1; a <= b; a++) {
+         	this.wait(timer*1000/b);
+        	if(end)this.interrupt();
+            if(game.isEnded()) {
+            	if(HVD.players.contains(game.getHunter())) {
+            		winGame();
+            	}else {
+            		loseGame();
+            	}
+            }
+     	}
+        
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.GOLD+timer+ChatColor.AQUA+" seconds remain!");
      	timer = timer/2;
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	
-        	return;
-        }
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
-     	this.wait(timer*1000/4);
-    	if(end)this.interrupt();
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
+     	for(int a = 1; a <= b; a++) {
+         	this.wait(timer*1000/b);
+        	if(end)this.interrupt();
+            if(game.isEnded()) {
+            	if(HVD.players.contains(game.getHunter())) {
+            		winGame();
+            	}else {
+            		loseGame();
+            	}
+            }
+     	}
+     	
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.GOLD+timer+ChatColor.AQUA+" seconds remain!");
      	this.wait(timer*1000);
     	if(end)this.interrupt();
@@ -290,16 +180,16 @@ public HVDGameThread(HVD pl, HVDGame g){
 		Player p = plugin.getServer().getPlayer(game.getHunter());
 		//give items
 		ItemStack i = new ItemStack(Material.IRON_HELMET);
-		i.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+		i.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
 		p.getInventory().setHelmet(i);
 		i = new ItemStack(Material.IRON_CHESTPLATE);
-		i.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+		i.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
 		p.getInventory().setChestplate(i);
 		i = new ItemStack(Material.IRON_LEGGINGS);
-		i.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+		i.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
 		p.getInventory().setLeggings(i);
 		i = new ItemStack(Material.IRON_BOOTS);
-		i.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+		i.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
 		p.getInventory().setBoots(i);
 		i = new ItemStack(Material.DIAMOND_SWORD);
 		i.addEnchantment(Enchantment.DAMAGE_ALL, 1);
