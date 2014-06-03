@@ -16,35 +16,44 @@ public class HVDGameThread extends Thread {
 
 private final HVDGame game;
 private final HVD plugin;
+public boolean end;
 
 public HVDGameThread(HVD pl, HVDGame g){
     setName("HVD-Thread-"+getId());
     game = g;
     plugin = pl;
+    end = false;
 }
 	synchronized public void run() {
     	try {
+    	if(end)this.interrupt();
 		game.setEnded(true);
         int start = game.getStartTime();
         this.wait(20*1000);
+    	if(end)this.interrupt();
         while(HVD.players.size()<game.getMinPlayers()) {
             int i = game.getMinPlayers()-HVD.players.size();
             plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: Game requires " +ChatColor.GOLD+i+ChatColor.AQUA+" more players to begin!");
             this.wait(10*1000);
+        	if(end)this.interrupt();
         }
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: Game beginning in " +ChatColor.GOLD+start+ChatColor.AQUA+" seconds!");
      	start = start/2;
         this.wait(start*1000);
+    	if(end)this.interrupt();
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: Game beginning in " +ChatColor.GOLD+start+ChatColor.AQUA+" seconds!");
      	start = start/2;
      	this.wait(start*1000);
+    	if(end)this.interrupt();
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: Game beginning in " +ChatColor.GOLD+start+ChatColor.AQUA+" seconds!");
      	this.wait(start*1000);
+    	if(end)this.interrupt();
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: "+ChatColor.GOLD+"Game Start"+ChatColor.AQUA+"!");
         game.setHunter(game.chooseHunter());
         startGame();
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.RED+game.getHunter()+ChatColor.AQUA+" is the Hunter! You have 10 seconds to run and hide before he is given his gear!");
         this.wait(10*1000);
+    	if(end)this.interrupt();
         game.setEnded(false);
         equipHunter();
         equipDeer();
@@ -56,6 +65,7 @@ public HVDGameThread(HVD pl, HVDGame g){
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.GOLD+timer+ChatColor.AQUA+" seconds remain in this round!");
      	timer = timer/2;
      	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
         if(game.isEnded()) {
         	if(HVD.players.contains(game.getHunter())) {
         		winGame();
@@ -64,6 +74,7 @@ public HVDGameThread(HVD pl, HVDGame g){
         	}
         }
      	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
         if(game.isEnded()) {
         	if(HVD.players.contains(game.getHunter())) {
         		winGame();
@@ -72,26 +83,7 @@ public HVDGameThread(HVD pl, HVDGame g){
         	}
         }
      	this.wait(timer*1000/4);
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
-     	this.wait(timer*1000/4);
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
-        plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.GOLD+timer+ChatColor.AQUA+" seconds remain!");
-     	timer = timer/2;
-     	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
         if(game.isEnded()) {
         	if(HVD.players.contains(game.getHunter())) {
         		winGame();
@@ -101,24 +93,7 @@ public HVDGameThread(HVD pl, HVDGame g){
         	return;
         }
      	this.wait(timer*1000/4);
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
-     	this.wait(timer*1000/4);
-        if(game.isEnded()) {
-        	if(HVD.players.contains(game.getHunter())) {
-        		winGame();
-        	}else {
-        		loseGame();
-        	}
-        	return;
-        }
-     	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
         if(game.isEnded()) {
         	if(HVD.players.contains(game.getHunter())) {
         		winGame();
@@ -130,6 +105,7 @@ public HVDGameThread(HVD pl, HVDGame g){
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.GOLD+timer+ChatColor.AQUA+" seconds remain!");
      	timer = timer/2;
      	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
         if(game.isEnded()) {
         	if(HVD.players.contains(game.getHunter())) {
         		winGame();
@@ -139,6 +115,7 @@ public HVDGameThread(HVD pl, HVDGame g){
         	return;
         }
      	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
         if(game.isEnded()) {
         	if(HVD.players.contains(game.getHunter())) {
         		winGame();
@@ -148,6 +125,7 @@ public HVDGameThread(HVD pl, HVDGame g){
         	return;
         }
      	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
         if(game.isEnded()) {
         	if(HVD.players.contains(game.getHunter())) {
         		winGame();
@@ -157,6 +135,7 @@ public HVDGameThread(HVD pl, HVDGame g){
         	return;
         }
      	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
         if(game.isEnded()) {
         	if(HVD.players.contains(game.getHunter())) {
         		winGame();
@@ -168,6 +147,7 @@ public HVDGameThread(HVD pl, HVDGame g){
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.GOLD+timer+ChatColor.AQUA+" seconds remain!");
      	timer = timer/2;
      	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
         if(game.isEnded()) {
         	if(HVD.players.contains(game.getHunter())) {
         		winGame();
@@ -177,6 +157,49 @@ public HVDGameThread(HVD pl, HVDGame g){
         	return;
         }
      	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
+        if(game.isEnded()) {
+        	if(HVD.players.contains(game.getHunter())) {
+        		winGame();
+        	}else {
+        		loseGame();
+        	}
+        	return;
+        }
+     	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
+        if(game.isEnded()) {
+        	if(HVD.players.contains(game.getHunter())) {
+        		winGame();
+        	}else {
+        		loseGame();
+        	}
+        	return;
+        }
+     	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
+        if(game.isEnded()) {
+        	if(HVD.players.contains(game.getHunter())) {
+        		winGame();
+        	}else {
+        		loseGame();
+        	}
+        	return;
+        }
+        plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.GOLD+timer+ChatColor.AQUA+" seconds remain!");
+     	timer = timer/2;
+     	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
+        if(game.isEnded()) {
+        	if(HVD.players.contains(game.getHunter())) {
+        		winGame();
+        	}else {
+        		loseGame();
+        	}
+        	return;
+        }
+     	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
         if(game.isEnded()) {
         	if(HVD.players.contains(game.getHunter())) {
         		winGame();
@@ -187,6 +210,7 @@ public HVDGameThread(HVD pl, HVDGame g){
         	return;
         }
      	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
         if(game.isEnded()) {
         	if(HVD.players.contains(game.getHunter())) {
         		winGame();
@@ -196,6 +220,7 @@ public HVDGameThread(HVD pl, HVDGame g){
         	return;
         }
      	this.wait(timer*1000/4);
+    	if(end)this.interrupt();
         if(game.isEnded()) {
         	if(HVD.players.contains(game.getHunter())) {
         		winGame();
@@ -206,6 +231,7 @@ public HVDGameThread(HVD pl, HVDGame g){
         }
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.GOLD+timer+ChatColor.AQUA+" seconds remain!");
      	this.wait(timer*1000);
+    	if(end)this.interrupt();
         if(game.isEnded()) {
         	if(HVD.players.contains(game.getHunter())) {
         		winGame();
@@ -236,6 +262,8 @@ public HVDGameThread(HVD pl, HVDGame g){
 		game.setHunter("");
         for(Player p : plugin.getServer().getOnlinePlayers()) {
         	p.getInventory().clear();
+        	ItemStack[] is = new ItemStack[4];
+        	p.getInventory().setArmorContents(is);
             for (PotionEffect effect : p.getActivePotionEffects()) {
                 p.removePotionEffect(effect.getType());
             }

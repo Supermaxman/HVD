@@ -2,6 +2,7 @@ package me.supermaxman.hvd;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +13,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -27,6 +29,7 @@ public class HVDListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerDie(PlayerDeathEvent e) {
+		e.getDrops().clear();
 		Player p = e.getEntity();
 		if(HVD.players.contains(p.getName())) {
 	        p.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: "+ChatColor.RED+p.getName()+ChatColor.RED+" has died!");
@@ -36,7 +39,7 @@ public class HVDListener implements Listener {
 				HVD.game.setEnded(true);
 			}
 			if(HVD.players.size()==1) {
-				HVD.game.getThread().winGame();
+				HVD.game.setEnded(true);
 			}
 	        
 		}
@@ -76,7 +79,8 @@ public class HVDListener implements Listener {
 						if(HVD.players.size()<HVD.game.getMaxPlayers()) {
 							if(!HVD.players.contains(e.getPlayer().getName())) {
 								HVD.players.add(e.getPlayer().getName());
-								e.getPlayer().sendMessage(ChatColor.AQUA+"[HVD]: Joined game, starting soon!");
+					            int i = HVD.game.getMinPlayers()-HVD.players.size();
+								e.getPlayer().sendMessage(ChatColor.AQUA+"[HVD]: Joined game, needs "+ChatColor.GOLD+i+ChatColor.AQUA+" more players!");
 							}else {
 								e.getPlayer().sendMessage(ChatColor.RED+"[HVD]: You have already joined!");
 							}
@@ -98,7 +102,7 @@ public class HVDListener implements Listener {
 						if(i.getItemMeta().getDisplayName().equals(ChatColor.YELLOW + "" + ChatColor.BOLD + "Sprint")) {
 							if(HVD.cooldowns.containsKey(p.getName())) {
 								if(HVD.cooldowns.get(p.getName())+15000 < System.currentTimeMillis()) {
-									HVD.cooldowns.remove(p.getName());
+									HVD.cooldowns.put(p.getName(), System.currentTimeMillis());
 									p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 3, true));
 									e.getPlayer().sendMessage(ChatColor.AQUA+"[HVD]: Sprinting!");
 								}else {
@@ -120,10 +124,13 @@ public class HVDListener implements Listener {
 	public void onPlayerPickupItem(PlayerPickupItemEvent e) {
 		Player p = e.getPlayer();
 		ItemStack i = e.getItem().getItemStack();
-		if(i.getItemMeta().hasDisplayName()) {
-			if(i.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "" + ChatColor.BOLD + "Apple")) {
-				p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 400, 3, false));
-				p.getInventory().remove(i);
+		if(i.hasItemMeta()) {
+			if(i.getItemMeta().hasDisplayName()) {
+				if(i.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "" + ChatColor.BOLD + "Apple")) {
+					p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 400, 3, false));
+					p.getInventory().remove(i);
+					p.updateInventory();
+				}
 			}
 		}
 	
@@ -137,20 +144,33 @@ public class HVDListener implements Listener {
 		}
 	}
 	
+	@EventHandler
+	public void onItemDrop(ItemSpawnEvent e) {
+		if(!(e.getEntity().getItemStack().getType()==Material.APPLE)) {
+			e.setCancelled(true);
+		}
+		
+	}
+	
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerDamage(EntityDamageEvent e) {
 		if(e instanceof EntityDamageByEntityEvent) {
 			if(((EntityDamageByEntityEvent) e).getDamager() instanceof Player && e.getEntity() instanceof Player) {
 				Player p = (Player) ((EntityDamageByEntityEvent) e).getDamager();
-				//Player d = (Player) e.getEntity();
+				Player d = (Player) e.getEntity();
 				if(p.getItemInHand()!=null) {
 					ItemStack i = p.getItemInHand();
-					if(i.getItemMeta().hasDisplayName()) {
-						if(i.getItemMeta().getDisplayName().equals(ChatColor.RED + "" + ChatColor.BOLD + "Horn")){
-							e.setDamage(8);
+					if(i.hasItemMeta()) {
+						if(i.getItemMeta().hasDisplayName()) {
+							if(i.getItemMeta().getDisplayName().equals(ChatColor.RED + "" + ChatColor.BOLD + "Horn")){
+								e.setDamage(20);
+							}
 						}
 					}
+				}
+				if(!p.getName().equals(HVD.game.getHunter()) && !d.getName().equals(HVD.game.getHunter())) {
+					e.setCancelled(true);
 				}
 			}
 		}

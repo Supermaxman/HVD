@@ -3,6 +3,7 @@ package me.supermaxman.hvd;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,6 +13,7 @@ public class HVDHandleThread extends Thread {
 private final HVDGame game;
 private final HVD plugin;
 public boolean go;
+private Item it;
 
 public HVDHandleThread(HVD pl, HVDGame g){
     setName("HVD-Thread-Handle-"+getId());
@@ -25,7 +27,7 @@ public HVDHandleThread(HVD pl, HVDGame g){
 		 	try {
 				this.wait(30000);
 				if(!game.isEnded() && go) {
-					dropApple();
+					it = dropApple();
 				}
 			} catch (InterruptedException e) {
 				HVD.log.warning("[" + plugin.getName() + "] Game interupted by server.");
@@ -35,13 +37,16 @@ public HVDHandleThread(HVD pl, HVDGame g){
 	}
 	
 	@SuppressWarnings("deprecation")
-	synchronized void dropApple() {
+	synchronized Item dropApple() {
+		if(it!=null) {
+			it.remove();
+		}
 		ItemStack i = new ItemStack(Material.APPLE);
 		ItemMeta m = i.getItemMeta();
 		m.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Apple");
 		i.setItemMeta(m);
 		Player p = plugin.getServer().getPlayer(game.getHunter());
-		p.getWorld().dropItem(new Location(p.getWorld(), game.getAppleLocationX(), game.getAppleLocationY(), game.getAppleLocationZ()), i);
+		return p.getWorld().dropItem(new Location(p.getWorld(), game.getAppleLocationX(), game.getAppleLocationY(), game.getAppleLocationZ()), i);
 	}
 
 	

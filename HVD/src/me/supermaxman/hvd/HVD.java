@@ -66,6 +66,8 @@ public class HVD extends JavaPlugin {
 	
 	public void onDisable() {
 		log.info(getName() + " has been disabled.");
+		game.getThread().end = true;
+		game.getThreadHandle().go = false;
 		saveConfig();
 	}
 	
