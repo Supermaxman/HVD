@@ -1,0 +1,9 @@
+name: HVD
+main: me.supermaxman.hvd.HVD
+version: 1.0.0
+author: Supermaxman
+description: Hunters Vs Deer!
+commands:
+    hvd:
+        description: Op commands
+        usage: /<command>

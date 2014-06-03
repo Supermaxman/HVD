@@ -1,0 +1,16 @@
+#
+# Notes:
+# 
+settings:
+  arena: 
+    minplayers: '3'
+    maxplayers: '6'
+    lobbylocationx: '0'
+    lobbylocationy: '100'
+    lobbylocationz: '0'
+    starttime: '40'
+    timelimit: '600'
+    gamelocationx: '100'
+    gamelocationy: '100'
+    gamelocationz: '100'
+    
