@@ -13,7 +13,7 @@ public class HVDHandleThread extends Thread {
 private final HVDGame game;
 private final HVD plugin;
 public boolean go;
-private Item it;
+public Item it;
 
 public HVDHandleThread(HVD pl, HVDGame g){
     setName("HVD-Thread-Handle-"+getId());

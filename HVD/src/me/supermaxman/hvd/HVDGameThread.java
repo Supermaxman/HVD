@@ -319,27 +319,28 @@ public HVDGameThread(HVD pl, HVDGame g){
 				p.getInventory().setLeggings(i);
 				i = new ItemStack(Material.LEATHER_BOOTS);
 				p.getInventory().setBoots(i);
-				i = new ItemStack(Material.WOOD_AXE);
-				p.setItemInHand(i);
+				
+				ArrayList<String> l = new ArrayList<String>();
+				
+				i = new ItemStack(Material.BLAZE_ROD);
+				ItemMeta m = i.getItemMeta();
+				m.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Horn");
+				l.add(ChatColor.AQUA + "Hits for 1 heart!");
+				m.setLore(l);
+				i.setItemMeta(m);
+				p.getInventory().addItem(i);
 				
 				i = new ItemStack(Material.SUGAR);
-				ItemMeta m = i.getItemMeta();
+				l = new ArrayList<String>();
+				m = i.getItemMeta();
 				m.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "Sprint");
-				ArrayList<String> l = new ArrayList<String>();
 				l.add(ChatColor.AQUA + "Right click to sprint");
 				l.add(ChatColor.AQUA +  "every 15 seconds");
 				m.setLore(l);
 				i.setItemMeta(m);
 				p.getInventory().addItem(i);
 				
-				i = new ItemStack(Material.BLAZE_ROD);
-				m = i.getItemMeta();
-				m.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Horn");
-				l = new ArrayList<String>();
-				l.add(ChatColor.AQUA + "Hits for 1 heart!");
-				m.setLore(l);
-				i.setItemMeta(m);
-				p.getInventory().addItem(i);
+				
 			}
 		}
 	}

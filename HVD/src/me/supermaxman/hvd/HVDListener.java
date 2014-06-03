@@ -120,7 +120,6 @@ public class HVDListener implements Listener {
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerPickupItem(PlayerPickupItemEvent e) {
 		Player p = e.getPlayer();
@@ -128,13 +127,17 @@ public class HVDListener implements Listener {
 		if(i.hasItemMeta()) {
 			if(i.getItemMeta().hasDisplayName()) {
 				if(i.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "" + ChatColor.BOLD + "Apple")) {
-					p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 400, 3, false));
-					p.getInventory().remove(i);
-					p.updateInventory();
+					if(!p.getName().equals(HVD.game.getHunter())) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 400, 3, false));
+						e.setCancelled(true);
+						HVD.game.getThreadHandle().it.remove();
+					}else {
+						e.setCancelled(true);
+					}
 				}
 			}
 		}
-	
+		e.setCancelled(true);
 	}
 	
 	@EventHandler
@@ -165,7 +168,7 @@ public class HVDListener implements Listener {
 					if(i.hasItemMeta()) {
 						if(i.getItemMeta().hasDisplayName()) {
 							if(i.getItemMeta().getDisplayName().equals(ChatColor.RED + "" + ChatColor.BOLD + "Horn")){
-								e.setDamage(20);
+								e.setDamage(16);
 							}
 						}
 					}
