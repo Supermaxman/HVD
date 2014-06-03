@@ -1,6 +1,7 @@
 package me.supermaxman.hvd;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,7 +16,8 @@ public class HVD extends JavaPlugin {
 	public static HVDGame game;
 	
 	public static ArrayList<String> players = new ArrayList<String>();
-	
+	static HashMap<String, Long> cooldowns = new HashMap<String, Long>();
+
 	public void onEnable() {
 		plugin = this;
 

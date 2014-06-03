@@ -93,9 +93,23 @@ public class HVDListener implements Listener {
 			Player p = e.getPlayer();
 			if(p.getItemInHand()!=null) {
 				ItemStack i = p.getItemInHand();
-				if(i.getItemMeta().hasDisplayName()) {
-					if(i.getItemMeta().getDisplayName().equals(ChatColor.YELLOW + "" + ChatColor.BOLD + "Sprint")) {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 3, true));
+				if(i.hasItemMeta()) {
+					if(i.getItemMeta().hasDisplayName()) {
+						if(i.getItemMeta().getDisplayName().equals(ChatColor.YELLOW + "" + ChatColor.BOLD + "Sprint")) {
+							if(HVD.cooldowns.containsKey(p.getName())) {
+								if(HVD.cooldowns.get(p.getName())+15000 < System.currentTimeMillis()) {
+									HVD.cooldowns.remove(p.getName());
+									p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 3, true));
+									e.getPlayer().sendMessage(ChatColor.AQUA+"[HVD]: Sprinting!");
+								}else {
+									e.getPlayer().sendMessage(ChatColor.RED+"[HVD]: Sprint is on cooldown!");
+								}
+							}else {
+								HVD.cooldowns.put(p.getName(), System.currentTimeMillis());
+								p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 3, true));
+								e.getPlayer().sendMessage(ChatColor.AQUA+"[HVD]: Sprinting!");
+							}							
+						}
 					}
 				}
 			}
@@ -109,6 +123,7 @@ public class HVDListener implements Listener {
 		if(i.getItemMeta().hasDisplayName()) {
 			if(i.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "" + ChatColor.BOLD + "Apple")) {
 				p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 400, 3, false));
+				p.getInventory().remove(i);
 			}
 		}
 	
@@ -133,7 +148,7 @@ public class HVDListener implements Listener {
 					ItemStack i = p.getItemInHand();
 					if(i.getItemMeta().hasDisplayName()) {
 						if(i.getItemMeta().getDisplayName().equals(ChatColor.RED + "" + ChatColor.BOLD + "Horn")){
-							e.setDamage(4);
+							e.setDamage(8);
 						}
 					}
 				}
