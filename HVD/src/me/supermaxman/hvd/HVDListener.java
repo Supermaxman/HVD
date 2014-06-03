@@ -52,6 +52,7 @@ public class HVDListener implements Listener {
 			e.setCancelled(true);
 		}
 	}
+	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
 		if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
@@ -60,8 +61,12 @@ public class HVDListener implements Listener {
 				if(sign.getLine(0).equalsIgnoreCase("HVD")&&sign.getLine(1).equalsIgnoreCase("join")) {
 					if(HVD.game.isEnded()) {
 						if(HVD.players.size()<HVD.game.getMaxPlayers()) {
-							HVD.players.add(e.getPlayer().getName());
-							e.getPlayer().sendMessage(ChatColor.AQUA+"[HVD]: Joined game, starting soon!");
+							if(!HVD.players.contains(e.getPlayer().getName())) {
+								HVD.players.add(e.getPlayer().getName());
+								e.getPlayer().sendMessage(ChatColor.AQUA+"[HVD]: Joined game, starting soon!");
+							}else {
+								e.getPlayer().sendMessage(ChatColor.RED+"[HVD]: You have already joined!");
+							}
 						}else {
 							e.getPlayer().sendMessage(ChatColor.RED+"[HVD]: Cannot join, game is full!");
 						}

@@ -41,7 +41,7 @@ public class HVDGame{
 
 	public String chooseHunter() {
 		Random r = new Random();
-		int i = r.nextInt(HVD.players.size()-1);
+		int i = r.nextInt(HVD.players.size());
 		return HVD.players.get(i);
 	}
 

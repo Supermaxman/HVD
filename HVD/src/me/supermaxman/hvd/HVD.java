@@ -1,6 +1,7 @@
 package me.supermaxman.hvd;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Logger;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -18,7 +19,7 @@ public class HVD extends JavaPlugin {
 	
 	public void onEnable() {
 		plugin = this;
-		
+
 		saveDefaultConfig();
         getCommand("hvd").setExecutor(new HVDExecutor(this));    
         
