@@ -46,6 +46,7 @@ public HVDGameThread(HVD pl, HVDGame g){
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.RED+game.getHunter()+ChatColor.AQUA+" is the Hunter! You have 10 seconds to run and hide before he is given his gear!");
         this.wait(10*1000);
         equipHunter();
+        equipDeer();
         plugin.getServer().broadcastMessage(ChatColor.AQUA+"[HVD]: " +ChatColor.RED+game.getHunter()+ChatColor.AQUA+" is hunting!");
         //start
         
@@ -269,6 +270,24 @@ public HVDGameThread(HVD pl, HVDGame g){
 		p.setItemInHand(i);
 		p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, game.getTimeLimit(), 2, true));
 		p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, game.getTimeLimit(), 1, true));
+		
+	}
+	synchronized void equipDeer() {
+		for(Player p : plugin.getServer().getOnlinePlayers()) {
+			if(HVD.players.contains(p.getName())&&(!game.getHunter().equals(p.getName()))) {
+				ItemStack i = new ItemStack(Material.LEATHER_HELMET);
+				p.getInventory().setHelmet(i);
+				i = new ItemStack(Material.LEATHER_CHESTPLATE);
+				p.getInventory().setChestplate(i);
+				i = new ItemStack(Material.LEATHER_LEGGINGS);
+				p.getInventory().setLeggings(i);
+				i = new ItemStack(Material.LEATHER_BOOTS);
+				p.getInventory().setBoots(i);
+				i = new ItemStack(Material.WOOD_AXE);
+				p.setItemInHand(i);
+			}
+		}
+		
 		
 	}
 }
