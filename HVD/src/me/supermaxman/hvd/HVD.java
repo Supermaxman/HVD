@@ -1,7 +1,6 @@
 package me.supermaxman.hvd;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.logging.Logger;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -34,7 +33,6 @@ public class HVD extends JavaPlugin {
 	static void startGame() {
 		
 		try {
-			//conf = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder() + File.separator + "config.yml"));
 			plugin.reloadConfig();
 			conf = plugin.getConfig();
 			int min = Integer.parseInt(HVD.conf.getString("settings.arena.minplayers"));

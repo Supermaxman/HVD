@@ -234,6 +234,7 @@ public HVDGameThread(HVD pl, HVDGame g){
         	HVD.players = new ArrayList<String>();
         }
         HVD.startGame();
+        this.interrupt();   
 	}
 	synchronized void startGame() {
         for(Player p : plugin.getServer().getOnlinePlayers()) {

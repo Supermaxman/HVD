@@ -21,6 +21,9 @@ public class HVDExecutor extends BaseExecutor {
         			HVD.game.setLobyLocationX(z);
         			HVD.plugin.saveConfig();
                 	player.sendMessage(ChatColor.AQUA+"[HVD]: Lobby now set at current location.");
+        		}else if(s.equalsIgnoreCase("endgame")) {
+        			HVD.game.getThread().endGame();
+                	player.sendMessage(ChatColor.AQUA+"[HVD]: Game restarted.");
         		}else if(s.equalsIgnoreCase("setgame")) {
         			int x = player.getLocation().getBlockX();
         			int y = player.getLocation().getBlockY();
@@ -63,10 +66,10 @@ public class HVDExecutor extends BaseExecutor {
                     	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, please only set numbers for limits.");
         			}
         		}else {
-                	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, use /hvd setlobby,setgame,starttime [time],minplayers [limit],maxplayers [limit].");
+                	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, use /hvd setlobby,setgame,endgame,starttime [time],minplayers [limit],maxplayers [limit].");
         		}
         	}else {
-            	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, use /hvd setlobby,setgame,starttime [time],minplayers [limit],maxplayers [limit].");
+            	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, use /hvd setlobby,setgame,endgame,starttime [time],minplayers [limit],maxplayers [limit].");
         	}
         }else {
         	player.sendMessage(ChatColor.RED+"[HVD]: You do not have permission to use this command.");
