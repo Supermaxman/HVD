@@ -46,6 +46,9 @@ public HVDHandleThread(HVD pl, HVDGame g){
 		m.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Apple");
 		i.setItemMeta(m);
 		Player p = plugin.getServer().getPlayer(game.getHunter());
+		if(p == null) {
+			this.interrupt();
+		}
 		return p.getWorld().dropItem(new Location(p.getWorld(), game.getAppleLocationX(), game.getAppleLocationY(), game.getAppleLocationZ()), i);
 	}
 

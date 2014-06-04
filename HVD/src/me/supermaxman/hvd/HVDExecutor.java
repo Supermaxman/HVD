@@ -52,6 +52,7 @@ public class HVDExecutor extends BaseExecutor {
         			try {
             			int t = Integer.parseInt(args[1]);
             			HVD.conf.set("settings.arena.appletimer", t);
+            			HVD.game.setAppleTimer(t);
             			HVD.plugin.saveConfig();
                     	player.sendMessage(ChatColor.AQUA+"[HVD]: Apple timer changed to "+ ChatColor.GOLD+t+ChatColor.AQUA+".");
         			}catch(Exception e) {
@@ -61,8 +62,19 @@ public class HVDExecutor extends BaseExecutor {
         			try {
             			int t = Integer.parseInt(args[1]);
             			HVD.conf.set("settings.arena.starttime", t);
+            			HVD.game.setStartTime(t);
             			HVD.plugin.saveConfig();
                     	player.sendMessage(ChatColor.AQUA+"[HVD]: Start time changed to "+ ChatColor.GOLD+t+ChatColor.AQUA+".");
+        			}catch(Exception e) {
+                    	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, please only set numbers for time.");
+        			}
+        		}else if(s.equalsIgnoreCase("timelimit")&&(args.length>=2)) {
+        			try {
+            			int t = Integer.parseInt(args[1]);
+            			HVD.conf.set("settings.arena.timelimit", t);
+            			HVD.game.setTimeLimit(t);
+            			HVD.plugin.saveConfig();
+                    	player.sendMessage(ChatColor.AQUA+"[HVD]: Game time limit changed to "+ ChatColor.GOLD+t+ChatColor.AQUA+".");
         			}catch(Exception e) {
                     	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, please only set numbers for time.");
         			}
@@ -72,7 +84,7 @@ public class HVDExecutor extends BaseExecutor {
             			HVD.conf.set("settings.arena.minplayers", t);
             			HVD.game.setMinPlayers(t);
             			HVD.plugin.saveConfig();
-                    	player.sendMessage(ChatColor.AQUA+"[HVD]: Minimum player limit time changed to "+ ChatColor.GOLD+t+ChatColor.AQUA+".");
+                    	player.sendMessage(ChatColor.AQUA+"[HVD]: Minimum player limit changed to "+ ChatColor.GOLD+t+ChatColor.AQUA+".");
         			}catch(Exception e) {
                     	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, please only set numbers for limits.");
         			}
@@ -82,15 +94,15 @@ public class HVDExecutor extends BaseExecutor {
             			HVD.conf.set("settings.arena.maxplayers", t);
             			HVD.game.setMaxPlayers(t);
             			HVD.plugin.saveConfig();
-                    	player.sendMessage(ChatColor.AQUA+"[HVD]: Maximum player limit time changed to "+ ChatColor.GOLD+t+ChatColor.AQUA+".");
+                    	player.sendMessage(ChatColor.AQUA+"[HVD]: Maximum player limit changed to "+ ChatColor.GOLD+t+ChatColor.AQUA+".");
         			}catch(Exception e) {
                     	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, please only set numbers for limits.");
         			}
         		}else {
-                	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, use /hvd setlobby,setgame,setapple,endgame,starttime [time],minplayers [limit],maxplayers [limit].");
+                	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, use /hvd setlobby,setgame,setapple,endgame,starttime [time],timelimit [time],appletimer [time], minplayers [limit],maxplayers [limit].");
         		}
         	}else {
-            	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, use /hvd setlobby,setgame,setapple,endgame,appletimer [time],starttime [time],minplayers [limit],maxplayers [limit].");
+            	player.sendMessage(ChatColor.RED+"[HVD]: Command used incorrectly, use /hvd setlobby,setgame,setapple,endgame,starttime [time],timelimit [time],appletimer [time], minplayers [limit],maxplayers [limit].");
         	}
         }else {
         	player.sendMessage(ChatColor.RED+"[HVD]: You do not have permission to use this command.");

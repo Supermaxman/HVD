@@ -238,6 +238,9 @@ public HVDGameThread(HVD pl, HVDGame g){
 		game.getThreadHandle().start();
 	}
 	synchronized void stopDrops() {
+		if(game.getThreadHandle().it!=null) {
+			game.getThreadHandle().it.remove();
+		}
 		game.getThreadHandle().go = false;
 	}
 	

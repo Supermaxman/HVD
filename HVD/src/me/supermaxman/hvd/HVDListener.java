@@ -16,8 +16,10 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -127,7 +129,7 @@ public class HVDListener implements Listener {
 		if(i.hasItemMeta()) {
 			if(i.getItemMeta().hasDisplayName()) {
 				if(i.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "" + ChatColor.BOLD + "Apple")) {
-					if(!p.getName().equals(HVD.game.getHunter())) {
+					if(!p.getName().equals(HVD.game.getHunter()) && HVD.game.getThreadHandle()!=null) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 3, false));
 						e.setCancelled(true);
 						HVD.game.getThreadHandle().it.remove();
@@ -146,6 +148,33 @@ public class HVDListener implements Listener {
 			e.setCancelled(true);
 			e.setFoodLevel(20);
 		}
+	}
+	
+	@EventHandler
+	public void onPlayerquit(PlayerQuitEvent e) {
+		Player p = e.getPlayer();
+		if (HVD.players.contains(p.getName())) {
+			HVD.players.remove(p.getName());
+			if(p.getName().equals(HVD.game.getHunter())) {
+				HVD.game.getThread().loseGame();
+			}else {
+				if(HVD.players.size()==1) {
+					HVD.game.getThread().winGame();
+				}
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onPlayerJoin(PlayerJoinEvent e) {
+		Player p = e.getPlayer();
+    	p.teleport(new Location(p.getWorld(), HVD.game.getLobyLocationX(), HVD.game.getLobyLocationY(), HVD.game.getLobyLocationZ()));
+    	p.getInventory().clear();
+    	ItemStack[] is = new ItemStack[4];
+    	p.getInventory().setArmorContents(is);
+        for (PotionEffect effect : p.getActivePotionEffects()) {
+            p.removePotionEffect(effect.getType());
+        }
 	}
 	
 	@EventHandler
