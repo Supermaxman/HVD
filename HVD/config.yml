@@ -16,4 +16,5 @@ settings:
     applelocationx: '0'
     applelocationy: '100'
     applelocationz: '0'
+    appletimer: '30'
     

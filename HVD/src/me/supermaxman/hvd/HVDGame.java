@@ -20,13 +20,13 @@ public class HVDGame{
     private int appleLocationX;
     private int appleLocationY;
     private int appleLocationZ;
-    
+    private int appleTimer;
     private boolean ended;
     private HVDGameThread thread;
     private HVDHandleThread threadHandle;
     private String hunter;
     
-    public HVDGame(int min, int max, int x, int y, int z, int start, int limit, int x2, int y2, int z2, int x3, int y3, int z3) {
+    public HVDGame(int min, int max, int x, int y, int z, int start, int limit, int x2, int y2, int z2, int x3, int y3, int z3, int at) {
         minPlayers = min;
         maxPlayers = max;
         lobyLocationX = x;
@@ -41,7 +41,7 @@ public class HVDGame{
         setAppleLocationX(x3);
         setAppleLocationY(y3);
         setAppleLocationZ(z3);
-        
+        setAppleTimer(at);
         thread = new HVDGameThread(HVD.plugin, this);
         threadHandle = new HVDHandleThread(HVD.plugin, this);
         setEnded(false);
@@ -223,6 +223,16 @@ public class HVDGame{
 
 	public void setThreadHandle(HVDHandleThread threadHandle) {
 		this.threadHandle = threadHandle;
+	}
+
+
+	public int getAppleTimer() {
+		return appleTimer;
+	}
+
+
+	public void setAppleTimer(int appleTimer) {
+		this.appleTimer = appleTimer;
 	}
     
 

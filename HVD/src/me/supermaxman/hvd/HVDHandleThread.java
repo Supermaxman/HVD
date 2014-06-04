@@ -25,7 +25,7 @@ public HVDHandleThread(HVD pl, HVDGame g){
 		go = true;
     	while (go) {
 		 	try {
-				this.wait(30000);
+				this.wait(game.getAppleTimer()*1000);
 				if(!game.isEnded() && go) {
 					it = dropApple();
 				}
